@@ -1,0 +1,5 @@
+<lcgdict>
+  <class name="VSDVertex"/>
+  <class name="VSDMuon"/>
+  <class name="EventManager"/>
+</lcgdict>

@@ -6,4 +6,10 @@
  <use name="FWCore/Common"/>
  <use name="FWCore/FWLite"/>
  <use name="rootinteractive"/>
+<use name="rootphysics"/>
+<use name="rootmath"/>
+<lib name="ROOTEve"/>
+<lib name="EG"/>
+<lib name="ROOTWebDisplay"/>
+ <lib name="Geom"/>
 </bin>

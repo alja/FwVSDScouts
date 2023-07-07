@@ -1,0 +1,29 @@
+<mvc:View
+    controllerName="custom.controller.MyNewSummary"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m"
+    class="sapUiSizeCompact"
+    >
+	<FlexBox height="100%" id="sumSplitter" direction="Column" fitContainer="true" alignItems="Inherit" justifyContent="SpaceBetween">
+    <Tree id="tree" width="95%"
+          toggleOpenState="onToggleOpenState"
+          class="sapUiSizeCompact sapUiTinyMargin">
+	       <headerToolbar>
+				<OverflowToolbar >
+					<Button  id="addCollection"  type="Emphasized"
+            press="addCollection"
+            width="100%"
+						text="Add Collections"
+						tooltip="Enable / Disable Custom Context Menu">
+            <layoutData>
+				      <OverflowToolbarLayoutData priority="High" shrinkable="false" />
+			      </layoutData>
+          </Button>
+				</OverflowToolbar>
+        </headerToolbar>
+    </Tree>
+  </FlexBox>
+</mvc:View>
