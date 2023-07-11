@@ -44,9 +44,12 @@ public:
             h->fill();
 
             // debug
-            for (auto e : h->m_list)
-                e->dump();
-                }
+            if (0)
+            {
+                for (auto e : h->m_list)
+                    e->dump();
+            }
+        }
         set_event_info();
     }
 

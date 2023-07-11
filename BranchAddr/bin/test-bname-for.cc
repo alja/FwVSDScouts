@@ -161,6 +161,20 @@ class ScoutingPFJetVSDCollection : public VSDCollection
    }
 };
 
+class ScoutingEventInfoVSDCollection : public VSDCollection
+{
+   public:
+   ScoutingEventInfoVSDCollection(const std::string& n,const std::string& p) : VSDCollection(n, p) {}
+   void fill()
+   {
+      VSDEventInfo *e = new VSDEventInfo();
+      e->m_run = g_event->id().run();
+      e->m_lumi = g_event->id().luminosityBlock();
+      e->m_event = g_event->id().event();
+      m_list.push_back(e);
+   }
+};
+
 struct ScoutingProvider : public VSDProvider
 {
    TFile              *m_file;
@@ -186,6 +200,10 @@ struct ScoutingProvider : public VSDProvider
          std::cerr << iE.what() <<std::endl;
          throw;
       }
+
+
+      auto infoCollection = new ScoutingEventInfoVSDCollection("EventInfo", "EventInfo");
+      m_collections.push_back(infoCollection);
 
       auto vertexCollection = new ScoutingVertexVSDCollection("Vertex", "Vertex");
       m_collections.push_back(vertexCollection);

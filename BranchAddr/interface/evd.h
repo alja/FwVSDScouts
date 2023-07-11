@@ -279,7 +279,7 @@ public:
    EventManager(CollectionManager* m, VSDProvider* e):REveElement("EventManager") {m_collectionMng  = m; m_event = e; }
    virtual ~EventManager() {}
 
-   virtual void GotoEvent(int id)
+   virtual void GotoEvent(int id)  
    {
       m_event->GotoEvent(id);
       UpdateTitle();
@@ -289,7 +289,6 @@ public:
 
   void UpdateTitle()
    {
-return; // AMT tmp
       printf("======= update title %lld/%lld event ifnfo run=[%d], lumi=[%d], event = [%lld]\n", m_event->m_eventIdx, m_event->GetNumEvents(),
              m_event->m_eventInfo.m_lumi, m_event->m_eventInfo.m_run, m_event->m_eventInfo.m_event);
       SetTitle(Form("%lld/%lld/%d/%d/%lld",m_event->m_eventIdx, m_event->GetNumEvents(), m_event->m_eventInfo.m_lumi , m_event->m_eventInfo.m_run,  m_event->m_eventInfo.m_event));
@@ -459,7 +458,7 @@ void evd()
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
-   
+
    gEnv->SetValue("WebEve.DisableShow", 1);
    // gEnv->SetValue("WebGui.HttpMaxAge", 0);
    eveMng->Show();
