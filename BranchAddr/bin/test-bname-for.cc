@@ -18,6 +18,12 @@
 #include "DataFormats/Scouting/interface/ScoutingMuon.h"
 #include "DataFormats/Scouting/interface/Run3ScoutingMuon.h"
 
+#include "DataFormats/Scouting/interface/ScoutingCaloJet.h"
+#include "DataFormats/Scouting/interface/Run3ScoutingCaloJet.h"
+
+#include "DataFormats/Scouting/interface/ScoutingPFJet.h"
+#include "DataFormats/Scouting/interface/Run3ScoutingPFJet.h"
+
 #include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
 #include "FwliteTestModule/BranchAddr/interface/VSDProvider.h"
 #include "FwliteTestModule/BranchAddr/interface/evd.h"
@@ -89,6 +95,72 @@ class ScoutingMuonVSDCollection : public VSDCollection
    }
 };
 
+/*
+class ScoutingJetVSDCollection : public VSDCollection
+{
+   public:
+   ScoutingJetVSDCollection(const std::string& n,const std::string& p) : VSDCollection(n,p) {}
+   void fill()
+   {
+      edm::Handle<Run3ScoutingJetCollection> handle;
+      edm::InputTag tag("hltScoutingJetPacker", "");
+      try
+      {
+         g_event->getByLabel(tag, handle);
+         const Run3ScoutingJetCollection *coll = handle.product();
+         printf(" entries from scouting Muon(addr=%p) \n", (void *)coll);
+         for (auto &i : *coll)
+         {
+            VSDJet *e = new VSDJet();
+            // printf("    vtx: x = %.3f\n", v.x());
+            e->m_pt = i.pt();
+            e->m_eta = i.eta();
+            e->m_phi = i.phi();
+            e->m_area = i.area();
+            e->m_hadFraction = (i.hadEnergyInHB() + i.hadEnergyInHE()  + i.hadEnergyInHF())/
+              (i.hadEnergyInHB() + i.hadEnergyInHE()  + i.hadEnergyInHF() + i.emEnergyInEB() + i.emEnergyInEE() + i.emEnergyInHF());
+            m_list.push_back(e);
+         }
+      }
+      catch (const cms::Exception &iE)
+      {
+         std::cerr << iE.what() << std::endl;
+      }
+   }
+}
+*/
+
+
+class ScoutingPFJetVSDCollection : public VSDCollection
+{
+   public:
+   ScoutingPFJetVSDCollection(const std::string& n,const std::string& p) : VSDCollection(n,p) {}
+   void fill()
+   {
+      edm::Handle<Run3ScoutingPFJetCollection> handle;
+      edm::InputTag tag("hltScoutingPFPacker", "");
+      try
+      {
+         g_event->getByLabel(tag, handle);
+         const Run3ScoutingPFJetCollection *coll = handle.product();
+         printf(" entries from scouting PFJet(addr=%p) \n", (void *)coll);
+         for (auto &i : *coll)
+         {
+            VSDJet *e = new VSDJet();
+            e->m_pt = i.pt();
+            e->m_eta = i.eta();
+            e->m_phi = i.phi();
+            e->m_coneR = i.jetArea()*0.5;
+            m_list.push_back(e);
+         }
+      }
+      catch (const cms::Exception &iE)
+      {
+         std::cerr << iE.what() << std::endl;
+      }
+   }
+};
+
 struct ScoutingProvider : public VSDProvider
 {
    TFile              *m_file;
@@ -119,6 +191,8 @@ struct ScoutingProvider : public VSDProvider
       m_collections.push_back(vertexCollection);
       auto muonCollection = new ScoutingMuonVSDCollection("Muon", "Muon");
       m_collections.push_back(muonCollection);
+      auto pfJetCollection = new ScoutingPFJetVSDCollection("PFJet", "Jet");
+      m_collections.push_back(pfJetCollection);
    }
    ~ScoutingProvider()
    {
