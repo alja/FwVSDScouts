@@ -1,5 +1,9 @@
 <lcgdict>
   <class name="VSDVertex"/>
+  <class name="VSDCandidate"/>
   <class name="VSDMuon"/>
+  <class name="VSDJet"/>
+  <class name="VSDCollection"/>
+  <class name="ScoutingVSDCollection"/>
   <class name="EventManager"/>
 </lcgdict>

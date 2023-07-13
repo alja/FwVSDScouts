@@ -1,6 +1,5 @@
 #include "VSDBase.h"
 #include "VSDProxies.h"
-#include "FwliteTestModule/BranchAddr/interface/VSDProvider.h"
 
 #include "ROOT/REveDataCollection.hxx"
 #include "ROOT/REveDataSimpleProxyBuilderTemplate.hxx"
@@ -30,7 +29,7 @@
 #include "TApplication.h"
 #include "TMathBase.h"
 #include "TClass.h"
-#include "TGeoBBox.h"
+#include "TGeoBBox.h"s
 #include "TEnv.h"
 using namespace ROOT::Experimental;
 
@@ -39,7 +38,6 @@ ROOT::Experimental::REveManager* eveMng;
 ROOT::Experimental::REveProjectionManager* mngRhoZ;
 ROOT::Experimental::REveProjectionManager* mngRPhi;
 ROOT::Experimental::REveViewContext* viewContext;
-ROOT::Experimental::REveTrackPropagator* muonPropagator_g;
 
 //==============================================================================
 //== Selection =================================================================
@@ -172,7 +170,7 @@ public:
         for (auto &scene : eveMng->GetScenes()->RefChildren())
         {
 
-            // REveElement *product = glBuilder->CreateProduct(scene->GetTitle(), viewContext);
+            /*REveElement *product = */glBuilder->CreateProduct(scene->GetTitle(), viewContext);
 
             if (strncmp(scene->GetCName(), "Table", 5) == 0)
                 continue;
@@ -279,7 +277,7 @@ public:
    EventManager(CollectionManager* m, VSDProvider* e):REveElement("EventManager") {m_collectionMng  = m; m_event = e; }
    virtual ~EventManager() {}
 
-   virtual void GotoEvent(int id)  
+   virtual void GotoEvent(int id)
    {
       m_event->GotoEvent(id);
       UpdateTitle();
@@ -289,6 +287,7 @@ public:
 
   void UpdateTitle()
    {
+return; // AMT tmp
       printf("======= update title %lld/%lld event ifnfo run=[%d], lumi=[%d], event = [%lld]\n", m_event->m_eventIdx, m_event->GetNumEvents(),
              m_event->m_eventInfo.m_lumi, m_event->m_eventInfo.m_run, m_event->m_eventInfo.m_event);
       SetTitle(Form("%lld/%lld/%d/%d/%lld",m_event->m_eventIdx, m_event->GetNumEvents(), m_event->m_eventInfo.m_lumi , m_event->m_eventInfo.m_run,  m_event->m_eventInfo.m_event));
@@ -409,7 +408,7 @@ void createScenesAndViews()
       rhoZView->AddScene(pgeoScene);
    }
       // collections
-   eveMng->SpawnNewScene("Collections", "Collections");
+    auto collections = eveMng->SpawnNewScene("Collections", "Collections");
 
    // Table
    if (1) {
@@ -425,35 +424,44 @@ void createScenesAndViews()
 ////////////////////////////////////////////////////
 void evd()
 {
-   VSDProvider* prov = g_provider;
+printf("ffffffffffffffffffffffffffffffffff\n");
+   VSDProvider* event = g_provider;
    eveMng = REveManager::Create();
 
+printf("ffffffffffffffffffffffffffffffffff\n");
+   
    createScenesAndViews();
-   auto collectionMng = new CollectionManager(prov);
+   auto collectionMng = new CollectionManager(event);
 
-   auto eventMng = new EventManager(collectionMng, prov);
+   auto eventMng = new EventManager(collectionMng, event);
    eventMng->UpdateTitle();
-   // eventMng->SetName(prov->GetFile()->GetName());
-   eventMng->SetName("EventManager");
+   eventMng->SetName(prov->GetFile()->GetName());
    eveMng->GetWorld()->AddElement(eventMng);
 
+printf("ffffffffffffffffffffffffffffffffff\n");
 
    auto deviator = std::make_shared<FWSelectionDeviator>();
    eveMng->GetSelection()->SetDeviator(deviator);
    eveMng->GetHighlight()->SetDeviator(deviator);
-   for (auto &vsdc : prov->m_collections)
+   for (auto &vsdc : event->m_collections)
    {
       printf("vsd collection ====== %s\n", vsdc->m_name.c_str());
       if (vsdc->m_purpose == "EventInfo")
          continue;
       collectionMng->addCollection(vsdc);
    }
+
+
+printf("fffffffffffffffffffffffffffffffffffffeeeeeefff\n");
    eventMng->GotoEvent(0);
 
+
+printf("fffff ffffffffffffffffffffffyyyyffffff\n");
+/*
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
-
+*/
    gEnv->SetValue("WebEve.DisableShow", 1);
    // gEnv->SetValue("WebGui.HttpMaxAge", 0);
    eveMng->Show();

@@ -1,5 +1,6 @@
 #include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
 #include "FwliteTestModule/BranchAddr/interface/evd.h"
+#include "FwliteTestModule/BranchAddr/interface/ScoutingProvider.h"
 
 
 namespace FwliteTestModule_BranchAddr {

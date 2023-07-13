@@ -41,7 +41,7 @@ class VSDCandidate : public VSDBase
 public:
    // ROOT::Math::Polar3DPoint momentum;
    float m_eta{0.f}; float m_phi{0.f}; float m_pt{0.f};
-   int m_charge{0};
+   float m_charge{0};
 
 public:
    virtual ~VSDCandidate(){}
@@ -51,7 +51,7 @@ public:
    float pt() const { return m_pt; }
    float charge() const { return m_charge; }
 
-   void dump() { printf("VSDCanidate %f\n", m_pt); }
+   void dump() { printf("VSDCanidate pt = %f, charge = %f \n", m_pt, m_charge); }
 };
 
 /////////////////////////////////////////////////
@@ -66,6 +66,7 @@ public:
    float hadFraction() const { return m_hadFraction; }
    float coneR() const { return m_coneR; }
 
+   virtual ~VSDJet(){}
    //VSDJet(float pt, float eta, float phi, float had_fraction, float coneR = 0.2) : VSDCandidate(pt, eta, phi), m_hadFraction(had_fraction), m_coneR(coneR) {}
 
    using VSDBase::dump;
@@ -81,6 +82,7 @@ public:
 
    float global() const { return m_global; }
 
+   virtual ~VSDMuon(){}
    // VSDMuon(float pt, float eta, float phi, int charge, bool global) : VSDCandidate(pt, eta, phi, charge), m_global(global) {}
 };
 
@@ -91,6 +93,8 @@ public:
   float m_sumEt{0.f};
 public:
    // VSDMET(float pt, float eta, float phi, float sumEt) :  VSDCandidate(pt, eta, phi), m_sumEt(sumEt) {}
+   virtual ~VSDMET(){}
+
    float sumEt() { return m_sumEt; }
    void dump() { printf("VSDMET: phi: 2f, sumEt:%.2f / pt: %.2f\n", m_phi, m_sumEt); }
 };
@@ -111,16 +115,17 @@ struct VSDEventInfo : public VSDBase
 class VSDCollection
 {
 public:
-   VSDCollection(const std::string& n, const std::string& p, Color_t c=kBlue, std::string f="") : 
-                 m_name(n), m_purpose(p), m_color(c), m_filter(f) {}
+   VSDCollection(const std::string &n, const std::string &p, Color_t c = kBlue, std::string f = "") : m_name(n), m_purpose(p), m_color(c), m_filter(f) {}
+
+   VSDCollection() {}
+   virtual ~VSDCollection() {}
    std::string m_name;
    std::string m_purpose;
-   Color_t     m_color{kBlue};
+   Color_t m_color{kBlue};
    std::string m_filter;
    std::vector<VSDBase *> m_list;
 
    virtual void fill() {}
 };
-
 
 #endif // #ifdef VSDBase

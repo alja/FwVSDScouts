@@ -15,6 +15,9 @@ public:
           // m_data = new VSDReader(t);
        }
       */
+
+    virtual ~VSDProvider(){}
+
     TTree *m_tree{nullptr};
     VSDEventInfo m_eventInfo;
     //  VSDReader* m_data{nullptr};
