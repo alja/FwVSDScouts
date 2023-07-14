@@ -19,7 +19,6 @@
 #include "DataFormats/Scouting/interface/Run3ScoutingPFJet.h"
 
 #include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
-#include "FwliteTestModule/BranchAddr/interface/VSDProvider.h"
 fwlite::Event* g_event = nullptr;
 
 class ScoutingVSDCollection : public VSDCollection

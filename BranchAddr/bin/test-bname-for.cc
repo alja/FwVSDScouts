@@ -8,7 +8,6 @@
 
 #include "DataFormats/FWLite/interface/Event.h"
 #include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
-#include "FwliteTestModule/BranchAddr/interface/VSDProvider.h"
 #include "FwliteTestModule/BranchAddr/interface/ScoutingProvider.h"
 #include "FwliteTestModule/BranchAddr/interface/evd.h"
 

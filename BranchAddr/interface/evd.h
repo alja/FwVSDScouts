@@ -1,6 +1,5 @@
 #include "VSDBase.h"
 #include "VSDProxies.h"
-#include "FwliteTestModule/BranchAddr/interface/VSDProvider.h"
 
 #include "ROOT/REveDataCollection.hxx"
 #include "ROOT/REveDataSimpleProxyBuilderTemplate.hxx"

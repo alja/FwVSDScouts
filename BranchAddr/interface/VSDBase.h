@@ -4,7 +4,11 @@
 #include "nlohmann/json.hpp"
 #include "TStyle.h"
 #include "Rtypes.h"
+#include "TTree.h"
+
+
 class VSDProvider;
+VSDProvider *g_provider = nullptr;
 
 /////////////////////////////////////////////////
 class VSDBase
@@ -128,4 +132,75 @@ public:
    virtual void fill() {}
 };
 
+class VSDProvider
+{
+public:
+
+    virtual ~VSDProvider(){}
+
+    TTree *m_tree{nullptr};
+    VSDEventInfo m_eventInfo;
+    //  VSDReader* m_data{nullptr};
+    Long64_t m_eventIdx{0};
+    std::vector<VSDCollection *> m_collections;
+    nlohmann::json *m_config{nullptr};
+
+    virtual Long64_t GetNumEvents() { return (int)m_tree->GetEntriesFast(); }
+
+    void addCollection(VSDCollection *h)
+    {
+        m_collections.push_back(h);
+    }
+
+    virtual void GotoEvent(int eventIdx)
+    {
+        printf("goto   start \n");
+        // m_tree->GetEntry(eventIdx);
+        m_eventIdx = eventIdx;
+
+        // fill VSD collections
+        for (auto h : m_collections)
+        {
+            h->m_list.clear();
+
+            // h->fill(*(this->m_data));
+            h->fill();
+
+            // debug
+            if (0)
+            {
+                for (auto e : h->m_list)
+                    e->dump();
+            }
+        }
+        set_event_info();
+    }
+
+    virtual void set_event_info()
+    {
+        printf("vsd provier %lld events total %lld !!!!! \n", m_eventIdx, GetNumEvents());
+
+        for (auto &vsdc : m_collections)
+        {
+            if (vsdc->m_purpose == "EventInfo")
+            {
+                VSDEventInfo *ei = (VSDEventInfo *)vsdc->m_list[0];
+                m_eventInfo = *ei;
+                // printf("...... setting event info %lld \n", m_eventInfo.m_event);
+                return;
+            }
+        }
+    }
+
+    VSDCollection *RefColl(const std::string &name)
+    {
+        for (auto collection : m_collections)
+        {
+            if (name == collection->m_name)
+                return collection;
+        }
+        return nullptr;
+    };
+
+};
 #endif // #ifdef VSDBase

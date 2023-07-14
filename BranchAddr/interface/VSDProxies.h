@@ -317,9 +317,6 @@ class CandidateProxyBuilder : public REveDataSimpleProxyBuilderTemplate<VSDCandi
       t.fBeta = 1.;
       t.fV = REveVector(); // iData.vx(), iData.vy(), iData.vz());
       t.fP = REveVector(px, py, pz);
-
-      printf("(eta/theta =  (%f / %f ) (sin(theta)  = %f) candidate momentum is ..pz = [%f]\n\n", cand.eta(), theta, TMath::Sin(theta), pz);
-
       t.fSign = cand.m_charge;
       REveTrack *track = new REveTrack(&t, context->GetPropagator());
 
