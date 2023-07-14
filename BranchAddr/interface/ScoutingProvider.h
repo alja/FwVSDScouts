@@ -78,10 +78,12 @@ struct ScoutingProvider : public VSDProvider
       }
    }
 
+   virtual Long64_t GetNumEvents() { return m_event_tree->GetEntriesFast(); }
+
    ScoutingProvider(const char* fname)
    {
       m_file = TFile::Open(fname);
-      m_tree = (TTree *)m_file->Get("Events");
+      // m_tree = (TTree *)m_file->Get("Events");
       m_event_tree = dynamic_cast<TTree *>(m_file->Get("Events"));
       m_event = 0;
       try

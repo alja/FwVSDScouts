@@ -138,14 +138,13 @@ public:
 
     virtual ~VSDProvider(){}
 
-    TTree *m_tree{nullptr};
     VSDEventInfo m_eventInfo;
     //  VSDReader* m_data{nullptr};
     Long64_t m_eventIdx{0};
     std::vector<VSDCollection *> m_collections;
     nlohmann::json *m_config{nullptr};
 
-    virtual Long64_t GetNumEvents() { return (int)m_tree->GetEntriesFast(); }
+    virtual Long64_t GetNumEvents() { return 0; }
 
     void addCollection(VSDCollection *h)
     {
