@@ -627,19 +627,18 @@ void evd()
   TString name = prov->m_title;
   int l = name.Last('/');
   if (l != kNPOS)
-    name.Remove(0, l + 1);
+      name.Remove(0, l + 1);
 
-   eventMng->SetName(name.Data());
-   auto massDialog = new InvMassDialog();
-eventMng->AddElement(massDialog);
-   eveMng->GetWorld()->AddElement(eventMng);
+  eventMng->SetName(name.Data());
+  auto massDialog = new InvMassDialog();
+  eventMng->AddElement(massDialog);
+  eveMng->GetWorld()->AddElement(eventMng);
 
-
-   auto deviator = std::make_shared<FWSelectionDeviator>();
-   eveMng->GetSelection()->SetDeviator(deviator);
-   eveMng->GetHighlight()->SetDeviator(deviator);
-   for (auto &vsdc : prov->m_collections)
-   {
+  auto deviator = std::make_shared<FWSelectionDeviator>();
+  eveMng->GetSelection()->SetDeviator(deviator);
+  eveMng->GetHighlight()->SetDeviator(deviator);
+  for (auto &vsdc : prov->m_collections)
+  {
       printf("vsd collection ====== %s\n", vsdc->m_name.c_str());
       if (vsdc->m_purpose == "EventInfo")
          continue;
@@ -650,6 +649,7 @@ eventMng->AddElement(massDialog);
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
+   ((REveViewer*)(gEve->GetViewers()->FirstChild()))->SetMandatory(false);
 
    gEnv->SetValue("WebEve.DisableShow", 1);
    // gEnv->SetValue("WebGui.HttpMaxAge", 0);
