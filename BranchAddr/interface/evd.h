@@ -21,6 +21,7 @@
 #include <ROOT/REveDataCollection.hxx>
 #include <ROOT/REveSelection.hxx>
 #include <ROOT/REveManager.hxx>
+#include <ROOT/RWebWindow.hxx>
 
 // #include "TTree.h"
 #include "TGeoTube.h"
@@ -646,6 +647,20 @@ void evd()
       collectionMng->addCollection(vsdc);
    }
    eventMng->GotoEvent(0);
+
+   eveMng->GetWebWindow()->SetClientVersion("1.0");
+
+
+      //const char* mypath =  Form("%s/src/FireworksWeb/Core/ui5/",gSystem->Getenv("CMSSW_BASE"));
+      const char* mypath = "ui5";
+      printf("--- mypath ------ [%s] \n", mypath);
+      std::string fp = "mydir-" + ROOT::Experimental::gEve->GetWebWindow()->GetClientVersion()+"/";
+      ROOT::Experimental::gEve->AddLocation(fp,  mypath);
+      std::string dp = (Form("file:%s/eventDisplay.html", fp.c_str()));
+      ROOT::Experimental::gEve->SetDefaultHtmlPage(dp);
+
+      std::cout << "Default html page " << dp << std::endl;
+
 
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
