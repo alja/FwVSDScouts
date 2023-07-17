@@ -7,9 +7,9 @@
 #include "TFile.h"
 
 #include "DataFormats/FWLite/interface/Event.h"
-#include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
-#include "FwliteTestModule/BranchAddr/interface/ScoutingProvider.h"
-#include "FwliteTestModule/BranchAddr/interface/evd.h"
+#include "FwVSDScouts/BranchAddr/interface/VSDBase.h"
+#include "FwVSDScouts/BranchAddr/interface/ScoutingProvider.h"
+#include "FwVSDScouts/BranchAddr/interface/evd.h"
 
 #include "nlohmann/json.hpp"
 

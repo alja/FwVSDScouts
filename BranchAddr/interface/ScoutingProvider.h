@@ -18,7 +18,7 @@
 #include "DataFormats/Scouting/interface/ScoutingPFJet.h"
 #include "DataFormats/Scouting/interface/Run3ScoutingPFJet.h"
 
-#include "FwliteTestModule/BranchAddr/interface/VSDBase.h"
+#include "FwVSDScouts/BranchAddr/interface/VSDBase.h"
 fwlite::Event* g_event = nullptr;
 
 class ScoutingVSDCollection : public VSDCollection
@@ -130,7 +130,7 @@ ScoutingVSDCollection *makeCollection(const std::string name, const std::string 
    // vsd collection expression
    TString cname = TString::Format("%s_TEST_%sCollection", ScoutingClassType.c_str(), vsdClassType.c_str());
    TString expr;
-   // expr += "#include \"FwliteTestModule/BranchAddr/interface/VSDBase.h\"\n";
+   // expr += "#include \"FwVSDScouts/BranchAddr/interface/VSDBase.h\"\n";
    expr += TString::Format("class %s : public ScoutingVSDCollection { \npublic:\n", cname.Data());
    expr += TString::Format("%s(const std::string &n, const std::string &p) : ScoutingVSDCollection(n, p) {}\n", cname.Data());
    expr += fillFunc;
