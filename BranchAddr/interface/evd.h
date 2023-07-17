@@ -20,6 +20,7 @@
 #include <ROOT/REveViewContext.hxx>
 #include <ROOT/REveDataCollection.hxx>
 #include <ROOT/REveSelection.hxx>
+#include <ROOT/REveManager.hxx>
 
 // #include "TTree.h"
 #include "TGeoTube.h"
@@ -89,7 +90,7 @@ class InvMassDialog : public REveElement
          auto items = coll->GetItemList();
          for (auto &au : items->RefAunts())
          {
-            if (au == gEve->GetSelection())
+            if (au == ROOT::Experimental::gEve->GetSelection())
             {
                 std::cout << c->GetName() << " " << items->GetImpliedSelected() << " --- " << items->RefSelectedSet().size() << "\n";
                 for (auto &ss : items->RefSelectedSet())
@@ -649,7 +650,7 @@ void evd()
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
-   ((REveViewer*)(gEve->GetViewers()->FirstChild()))->SetMandatory(false);
+   ((REveViewer*)(ROOT::Experimental::gEve->GetViewers()->FirstChild()))->SetMandatory(false);
 
    gEnv->SetValue("WebEve.DisableShow", 1);
    // gEnv->SetValue("WebGui.HttpMaxAge", 0);
