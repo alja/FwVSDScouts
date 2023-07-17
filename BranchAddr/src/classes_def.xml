@@ -4,6 +4,7 @@
   <class name="VSDMuon"/>
   <class name="VSDJet"/>
   <class name="VSDCollection"/>
+  <class name="InvMassDialog"/>
   <class name="ScoutingVSDCollection"/>
   <class name="EventManager"/>
 </lcgdict>

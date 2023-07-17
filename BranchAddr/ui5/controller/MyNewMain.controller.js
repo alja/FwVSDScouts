@@ -22,6 +22,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          var elem = this.byId("centerTitle");
          let title = "<strong>" + elem.getProperty("htmlText")+ "</strong>";
 
+let pthis = this;
+         this.mgr.UT_refresh_invmass_dialog = function () {
+            pthis.invMassDialogRefresh();
+         }
+          
          elem.setHtmlText(title);
       },
 
@@ -100,57 +105,44 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
       onPressInvMass: function(oEvent)
       {
-
 			var oButton = oEvent.getSource(),
-				oView = this.getView();
-
+			oView = this.getView();
+            let pthis = this;
 			// create popover
 			if (!this._pPopover) {
 				this._pPopover = Fragment.load({
 					id: oView.getId(),
-					name: "custom.view.Popover",
+					name: "custom.view.InvMassPopover",
 					controller: this
             }).then(function (oPopover) {
                oView.addDependent(oPopover);
-
-
-               var list = new sap.m.List({
-                  inset: true
-               });
-
-               var data = {
-                  navigation: [{ title: "ffffff" }, { title: "fffffffff" }]
-               };
-
-
-               var itemTemplate = new sap.m.StandardListItem({
-                  title: "{title}"
-               });
-
-               var oModel = new sap.ui.model.json.JSONModel();
-               // set the data for the model
-               oModel.setData(data);
-               // set the model to the list
-               list.setModel(oModel);
-
-               // bind Aggregation
-               list.bindAggregation("items", "/navigation", itemTemplate);
-
-               oPopover.addContent(list);
-					// oPopover.bindElement("/ProductCollection/0");
 					return oPopover;
 				});
 			}
 			this._pPopover.then(function(oPopover) {
+            pthis.fw2gui.childs[0].w = oPopover;
+
+            let cl = oPopover.getContent();
+            cl[0].setHtmlText("<pre>Press \'Calculate\' button to get result \nof current selection state</pre>");
 				oPopover.openBy(oButton);
 			});
       },
       handleInvMassCalcPress : function()
       {
-			this.byId("myPopover").close();
-			alert("Calculate mir has been sent");
+		//	this.byId("myPopover").close();
 
+         let inmd =  this.fw2gui.childs[0];
+         this.mgr.SendMIR("Calculate()", inmd.fElementId, "InvMassDialog");
+      },
+
+      invMassDialogRefresh : function()
+      { 
+
+         let inmd = this.fw2gui.childs[0];
+         if (inmd.w) {
+         let cl = inmd.w.getContent();
+         cl[0].setHtmlText(inmd.fTitle);
+         }
       }
-
    });
 });

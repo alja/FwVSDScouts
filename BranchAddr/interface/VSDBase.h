@@ -199,7 +199,9 @@ public:
                 return collection;
         }
         return nullptr;
-    };
-
+    }
 };
+
+
+
 #endif // #ifdef VSDBase
