@@ -137,12 +137,22 @@ let pthis = this;
 
       invMassDialogRefresh : function()
       { 
-
          let inmd = this.fw2gui.childs[0];
          if (inmd.w) {
          let cl = inmd.w.getContent();
          cl[0].setHtmlText(inmd.fTitle);
          }
-      }
+      },
+
+      autoplay: function (oEvent) {
+         console.log("AUTO", oEvent.getParameter("selected"));
+         this.mgr.SendMIR("autoplay(" + oEvent.getParameter("selected") + ")", this.fw2gui.fElementId, "EventManager");
+      },
+
+      playdelay: function (oEvent) {
+         console.log("playdelay ", oEvent.getParameters());
+         this.mgr.SendMIR("playdelay(" + oEvent.getParameter("value") + ")", this.fw2gui.fElementId, "EventManager");
+      },
+
    });
 });
