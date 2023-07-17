@@ -143,6 +143,7 @@ public:
     Long64_t m_eventIdx{0};
     std::vector<VSDCollection *> m_collections;
     nlohmann::json *m_config{nullptr};
+    std::string m_title{"VSDPRovider"};
 
     virtual Long64_t GetNumEvents() { return 0; }
 

@@ -89,6 +89,13 @@ let pthis = this;
          this.byId("runInput").setValue(run);
          this.byId("lumiInput").setValue(lumi);
          this.byId("eventInput").setValue(eiei);
+
+this.byId("fileName").setText(this.fw2gui.fName);
+this.byId("fileName").setDesign("Bold");
+
+
+this.byId("fileNav").setText(event + "/" + nevents);
+this.byId("fileNav").setDesign("Bold");
       },
 
       nextEvent : function(oEvent) {

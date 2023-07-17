@@ -623,7 +623,13 @@ void evd()
    auto eventMng = new EventManager(collectionMng, prov);
    eventMng->UpdateTitle();
    // eventMng->SetName(prov->GetFile()->GetName());
-   eventMng->SetName("EventManager");
+
+  TString name = prov->m_title;
+  int l = name.Last('/');
+  if (l != kNPOS)
+    name.Remove(0, l + 1);
+
+   eventMng->SetName(name.Data());
    auto massDialog = new InvMassDialog();
 eventMng->AddElement(massDialog);
    eveMng->GetWorld()->AddElement(eventMng);

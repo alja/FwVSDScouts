@@ -82,6 +82,7 @@ struct ScoutingProvider : public VSDProvider
 
    ScoutingProvider(const char* fname)
    {
+      m_title = fname;
       m_file = TFile::Open(fname);
       // m_tree = (TTree *)m_file->Get("Events");
       m_event_tree = dynamic_cast<TTree *>(m_file->Get("Events"));
